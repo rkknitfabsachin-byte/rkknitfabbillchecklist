@@ -236,7 +236,7 @@ function createBillItem(bill, index) {
                         <div class="checkbox"></div><span>4. FMS Sheet</span>
                     </div>
                     <div class="step-item ${bill.steps.update ? 'completed' : ''}" onclick="toggleStep(${bill.id}, 'update')">
-                        <div class="checkbox"></div><span>5. Update Sheet</span>
+                        <div class="checkbox"></div><span>5. Bill Update Sheet</span>
                     </div>
                 </div>
                 
