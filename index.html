@@ -73,7 +73,7 @@ function doPost(e) {
   var sheet = ss.getSheetByName(userName);
   if (!sheet) {
     sheet = ss.insertSheet(userName);
-    sheet.appendRow(['Timestamp', 'Bill Name/No', 'Type', 'Step 1: Created', 'Step 2: Photo', 'Step 3: Uploaded', 'Step 4: FMS Filled', 'Step 5: Update Sheet', 'Details']);
+    sheet.appendRow(['Timestamp', 'Bill Name/No', 'Type', 'Step 1: Created', 'Step 2: Photo', 'Step 3: Uploaded', 'Step 4: FMS Filled', 'Step 5: Bill Update Sheet', 'Details']);
     sheet.setFrozenRows(1);
     sheet.getRange(1, 1, 1, 9).setFontWeight('bold').setBackground('#f3f3f3');
   }
