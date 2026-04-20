@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bill Checklist Pro | Precision Workflow</title>
+    <meta name="description" content="A premium, high-efficiency bill creation checklist with Google Sheets synchronization and real-time step tracking.">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Outfit:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body class="ledger-theme">
+    <div class="app-container">
+        <div class="spiral"></div>
+        
+        <header class="main-header">
+            <div class="brand">
+                <h1>Bill<span>Ledger</span></h1>
+                <div id="userDisplay" class="user-badge">User: <span id="userNameDisplay">...</span></div>
+            </div>
+            <div class="actions">
+                <button id="saveSheetsBtn" class="btn btn-primary">Sync All</button>
+                <button id="newJourneyBtn" class="btn btn-secondary">Clear</button>
+            </div>
+        </header>
+
+        <!-- User Identification Modal -->
+        <div id="userLoginModal" class="modal">
+            <div class="modal-content glass">
+                <h2>Ledger Identification</h2>
+                <p>Welcome to your personal Bill Ledger. Please enter your name to begin tracking.</p>
+                <input type="text" id="userNameInput" placeholder="Your Name" class="glass-input">
+                <div class="modal-actions">
+                    <button id="submitUserNameBtn" class="btn btn-primary">Open Ledger</button>
+                </div>
+            </div>
+        </div>
+
+        <section class="stats-bar">
+            <div class="stat-card">
+                <span class="label">Entries</span>
+                <span id="totalBillsCount" class="value">0</span>
+            </div>
+            <div class="stat-card">
+                <span class="label">Efficiency</span>
+                <span id="overallProgressText" class="value">0%</span>
+            </div>
+        </section>
+
+        <div class="search-container">
+            <input type="text" id="searchInput" placeholder="Search bill name or number..." class="search-input">
+        </div>
+
+        <section id="billList" class="bill-list">
+            <!-- Ledger entries will be injected here -->
+        </section>
+
+        <button id="addBillBtn" class="fab" aria-label="Add new entry">+</button>
+
+        <!-- Script Template Modal -->
+        <div id="scriptTemplateModal" class="modal">
+            <div class="modal-content glass wide">
+                <h2>Google Apps Script Template</h2>
+                <p>Create a new Apps Script, paste this code, and deploy as a Web App (Access: Anyone).</p>
+                <pre class="code-block" id="scriptCode">
+function doPost(e) {
+  var payload = JSON.parse(e.postData.contents);
+  var data = payload.bills;
+  var userName = payload.userName || 'Unknown User';
+  
+  var ss = SpreadsheetApp.getActiveSpreadsheet();
+  var sheet = ss.getSheetByName(userName);
+  if (!sheet) {
+    sheet = ss.insertSheet(userName);
+    sheet.appendRow(['Timestamp', 'Bill Name/No', 'Type', 'Step 1: Created', 'Step 2: Photo', 'Step 3: Uploaded', 'Step 4: FMS Filled', 'Step 5: Update Sheet', 'Details']);
+    sheet.setFrozenRows(1);
+    sheet.getRange(1, 1, 1, 9).setFontWeight('bold').setBackground('#f3f3f3');
+  }
+  
+  data.forEach(function(bill) {
+    sheet.appendRow([new Date(), bill.name, bill.type, bill.steps.create?'YES':'NO', bill.steps.photo?'YES':'NO', bill.steps.upload?'YES':'NO', bill.steps.fms?'YES':'NO', bill.steps.update?'YES':'NO', bill.details]);
+  });
+  
+  return ContentService.createTextOutput(JSON.stringify({status: 'success'})).setMimeType(ContentService.MimeType.JSON);
+}
+                </pre>
+                <button id="copyScriptBtn" class="btn btn-secondary">Copy to Clipboard</button>
+                <button id="closeScriptModalBtn" class="btn btn-primary">Got it</button>
+            </div>
+        </div>
+
+        <div id="toast" class="toast">Message goes here</div>
+    </main>
+
+    <script src="script.js"></script>
+</body>
+</html>
