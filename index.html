@@ -71,15 +71,15 @@ function doPost(e) {
   
   var ss = SpreadsheetApp.getActiveSpreadsheet();
   var sheet = ss.getSheetByName(userName);
-  if (!sheet) {
+    if (!sheet) {
     sheet = ss.insertSheet(userName);
-    sheet.appendRow(['Timestamp', 'Bill Name/No', 'Type', 'Step 1: Created', 'Step 2: Photo', 'Step 3: Uploaded', 'Step 4: FMS Filled', 'Step 5: Bill update sheet', 'Details']);
+    sheet.appendRow(['Timestamp', 'Bill Name/No', 'Type', 'Step 1: Created', 'Step 2: Photo/Uploaded', 'Step 3: FMS Filled', 'Step 4: BILL UPDATE SHEET', 'Step 5: BILTY COURIER', 'Details']);
     sheet.setFrozenRows(1);
     sheet.getRange(1, 1, 1, 9).setFontWeight('bold').setBackground('#f3f3f3');
   }
   
   data.forEach(function(bill) {
-    sheet.appendRow([new Date(), bill.name, bill.type, bill.steps.create?'YES':'NO', bill.steps.photo?'YES':'NO', bill.steps.upload?'YES':'NO', bill.steps.fms?'YES':'NO', bill.steps.update?'YES':'NO', bill.details]);
+    sheet.appendRow([new Date(), bill.name, bill.type, bill.steps.create?'YES':'NO', bill.steps.photoUpload?'YES':'NO', bill.steps.fms?'YES':'NO', bill.steps.update?'YES':'NO', bill.steps.bilty?'YES':'NO', bill.details]);
   });
   
   return ContentService.createTextOutput(JSON.stringify({status: 'success'})).setMimeType(ContentService.MimeType.JSON);

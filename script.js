@@ -122,7 +122,7 @@ function createNewBill(name = '') {
         id: Date.now(),
         name: nextName,
         type: 'Final',
-        steps: { create: false, photo: false, upload: false, fms: false, update: false },
+        steps: { create: false, photoUpload: false, fms: false, update: false, bilty: false },
         details: '',
         createdAt: new Date().toISOString()
     };
@@ -226,17 +226,17 @@ function createBillItem(bill, index) {
                     <div class="step-item ${bill.steps.create ? 'completed' : ''}" onclick="toggleStep(${bill.id}, 'create')">
                         <div class="checkbox"></div><span>1. Bill Created</span>
                     </div>
-                    <div class="step-item ${bill.steps.photo ? 'completed' : ''}" onclick="toggleStep(${bill.id}, 'photo')">
-                        <div class="checkbox"></div><span>2. Photo Taken</span>
-                    </div>
-                    <div class="step-item ${bill.steps.upload ? 'completed' : ''}" onclick="toggleStep(${bill.id}, 'upload')">
-                        <div class="checkbox"></div><span>3. Group Upload</span>
+                    <div class="step-item ${bill.steps.photoUpload ? 'completed' : ''}" onclick="toggleStep(${bill.id}, 'photoUpload')">
+                        <div class="checkbox"></div><span>2. Photo & Uploaded</span>
                     </div>
                     <div class="step-item ${bill.steps.fms ? 'completed' : ''}" onclick="toggleStep(${bill.id}, 'fms')">
-                        <div class="checkbox"></div><span>4. FMS Sheet</span>
+                        <div class="checkbox"></div><span>3. FMS Sheet</span>
                     </div>
                     <div class="step-item ${bill.steps.update ? 'completed' : ''}" onclick="toggleStep(${bill.id}, 'update')">
-                        <div class="checkbox"></div><span>5. Bill update sheet</span>
+                        <div class="checkbox"></div><span>4. BILL UPDATE SHEET</span>
+                    </div>
+                    <div class="step-item ${bill.steps.bilty ? 'completed' : ''}" onclick="toggleStep(${bill.id}, 'bilty')">
+                        <div class="checkbox"></div><span>5. BILTY COURIER</span>
                     </div>
                 </div>
                 
